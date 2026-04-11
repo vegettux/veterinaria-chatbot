@@ -1,0 +1,37 @@
+---
+alwaysApply: true
+---
+
+Business rules for the veterinary chatbot must follow the source of truth in `docs/business-rules.md`.
+
+Core constraints:
+- Surgery operating days are Monday to Thursday.
+- Daily surgical capacity is 240 minutes.
+- Maximum 2 dogs per day.
+- Cats are limited only by remaining time, not by quantity.
+- The client can choose only the day, never a specific surgery time.
+- Delivery windows are mandatory:
+  - Cats: 08:00–09:00
+  - Dogs: 09:00–10:30
+- Confirmation messages must include:
+  - surgery day
+  - delivery window
+  - approximate pickup time
+  - fasting instructions
+  - required documentation
+
+Clinical constraints:
+- Rabies vaccination is mandatory.
+- Microchip is mandatory, although it may be implanted on the same day with additional cost.
+- Animals must be vaccinated and dewormed before surgery.
+- Female dogs in heat cannot be operated until 2 months after the end of heat.
+- Animals older than 6 years require mandatory preoperative bloodwork.
+- If the animal has a known disease, surgery may be contraindicated and must be escalated.
+
+Service scope constraints:
+- The clinic does not provide emergency care.
+- The clinic does not provide routine consultations.
+- The chatbot must stay within the sterilization workflow and related operational guidance.
+
+Implementation rule:
+- If business logic changes, update `docs/business-rules.md` first, then align code and prompts with it.
