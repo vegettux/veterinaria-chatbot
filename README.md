@@ -80,6 +80,26 @@ El sistema se apoya en documentación estructurada en `/docs`:
 
 ---
 
+## 📋 Gestión del proyecto (Jira)
+
+El desarrollo del proyecto ha sido gestionado mediante Jira siguiendo un enfoque tipo Kanban.
+
+Se han definido 15 tickets que cubren todo el ciclo de desarrollo:
+
+- Configuración inicial
+- Diseño del flujo conversacional
+- Persistencia en base de datos
+- Validaciones clínicas
+- Gestión de citas
+- Pruebas funcionales
+- Despliegue
+- Limpieza final del repositorio
+
+📄 Documentación completa de tickets:
+👉 docs/tickets.md
+
+---
+
 # 🔄 Flujo funcional del chatbot
 
 1. Identificación del cliente
@@ -124,7 +144,7 @@ Permite:
 
 ---
 
-# 🧠 Metodología SDD (Spec Driven Development) 
+# 🧠 Metodología SDD (Spec Driven Development)
 
 El proyecto sigue un enfoque basado en especificación:
 
@@ -141,7 +161,7 @@ Reglas:
 
 ---
 
-# 🔧 Flujo de trabajo 
+# 🔧 Flujo de trabajo
 
 1. Creación de ticket en Jira
 2. Definición de requisitos
@@ -151,7 +171,7 @@ Reglas:
 
 ---
 
-# 🧪 Enriquecimiento de tickets 
+# 🧪 Enriquecimiento de tickets
 
 Se ha aplicado proceso de mejora de tickets:
 
@@ -170,7 +190,7 @@ Este proceso mejora la calidad del desarrollo.
 
 ---
 
-# 🤖 API 
+# 🤖 API
 
 Endpoints principales:
 
@@ -189,11 +209,15 @@ Ejemplo:
  "session_id": "test-session"  
 }
 
-# 💬 Interfaz de chat 
+---
+
+# 💬 Interfaz de chat
 
 - Interfaz web simple
 - Conexión directa con backend
 - Uso en navegador💬 Interfaz de chat (VET-8)
+
+---
 
 # 🧠 Lógica del chatbot
 
@@ -202,7 +226,7 @@ Ejemplo:
 - Flujo guiado paso a paso
 - Una pregunta por interacción
 
-
+---
 
 # 🔁 Memoria de conversación
 
@@ -215,7 +239,7 @@ Limitación actual:
 
 - Memoria en runtime (no persistente)
 
-
+---
 
 # 📚 RAG (simulado)
 
@@ -231,7 +255,7 @@ Mejora futura:
 
 ---
 
-# 📅 Disponibilidad 
+# 📅 Disponibilidad
 
 - Sistema mock de fechas disponibles
 - Generación dinámica
@@ -284,16 +308,16 @@ Mejora futura:
 - minutos
 - estado
 
+---
+
 # 🚀 Instalación y ejecución
-
-
 
 git clone [https://github.com/vegettux/veterinaria-chatbot](https://github.com/vegettux/veterinaria-chatbot)  
 cd veterinaria-chatbot  
-  
+
 python -m venv venv  
 venv\Scripts\activate  
-  
+
 pip install -r requirements.txt
 
 ### Configurar `.env`:
@@ -304,11 +328,15 @@ OPENAI_API_KEY=tu_clave
 
 uvicorn main:app --reload
 
+python -m uvicorn main:app --reload
+
 ### Abrir en navegador:
 
 [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 
-# 🌐 Despliegue (VET-3)
+---
+
+# 🌐 Despliegue
 
 Aplicación desplegada en:
 
@@ -361,4 +389,3 @@ Este proyecto demuestra cómo un chatbot puede:
 
 **José Gil**  
 Máster Big Data & IA — ENAE
-
