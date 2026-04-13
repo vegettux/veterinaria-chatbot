@@ -1,4 +1,5 @@
 import os
+import logging
 from datetime import datetime, timedelta
 from typing import Optional
 try:
@@ -13,6 +14,8 @@ DATABASE_URL = (
     or os.getenv("POSTGRES_URL")
     or os.getenv("POSTGRES_PRISMA_URL")
 )
+
+logger = logging.getLogger("veterinaria.agenda")
 
 TIEMPOS_CIRUGIA = {
     "gato_macho": 12,
@@ -39,7 +42,11 @@ def get_connection():
         raise RuntimeError("Dependencia psycopg no disponible en runtime.")
     if not DATABASE_URL:
         raise RuntimeError("DATABASE_URL no está configurada.")
-    return psycopg.connect(DATABASE_URL, row_factory=dict_row)
+    try:
+        return psycopg.connect(DATABASE_URL, row_factory=dict_row)
+    except Exception as exc:
+        logger.exception("Error conectando a Postgres.")
+        raise RuntimeError(f"No se pudo conectar a Postgres: {exc}") from exc
 
 
 def init_db():
@@ -90,6 +97,18 @@ def init_db():
 
     conn.commit()
     conn.close()
+
+
+def db_healthcheck() -> dict:
+    try:
+        conn = get_connection()
+        c = conn.cursor()
+        c.execute("SELECT 1 AS ok")
+        row = c.fetchone()
+        conn.close()
+        return {"status": "ok", "ping": row["ok"] if row else None}
+    except Exception as exc:
+        return {"status": "error", "error": str(exc)}
 
 
 # =========================
@@ -556,11 +575,16 @@ def cancelar_cita_confirmada_por_mascota(mascota_id: int) -> bool:
 
 
 if DATABASE_URL:
+    logger.info(
+        "Startup DB env detectada. source=%s",
+        "DATABASE_URL" if os.getenv("DATABASE_URL") else (
+            "POSTGRES_URL" if os.getenv("POSTGRES_URL") else "POSTGRES_PRISMA_URL"
+        ),
+    )
     try:
         init_db()
+        logger.info("Init DB completada correctamente.")
     except Exception:
-        # No bloqueamos el arranque de la API si hay un error temporal
-        # de conexión en el arranque serverless.
-        pass
+        logger.exception("Init DB falló durante startup.")
 
 

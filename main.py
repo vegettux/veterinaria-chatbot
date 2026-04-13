@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+import logging
 import os
 import re
 from typing import Optional
@@ -14,6 +15,7 @@ from agenda import (
     existe_cita_mascota,
     get_fechas_disponibles_reales,
     listar_mascotas_cliente,
+    db_healthcheck,
     obtener_cita_confirmada_por_mascota,
     registrar_cliente,
     registrar_mascota,
@@ -22,6 +24,8 @@ from agenda import (
 )
 
 app = FastAPI(title="Veterinaria Chatbot API")
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("veterinaria.main")
 
 conversation_store = {}
 state_store = {}
@@ -849,6 +853,21 @@ def home():
     return HTML_PAGE
 
 
+@app.get("/healthz")
+def healthz():
+    db = db_healthcheck()
+    return {
+        "status": "ok" if db.get("status") == "ok" else "degraded",
+        "db": db,
+        "env": {
+            "DATABASE_URL": bool(os.getenv("DATABASE_URL")),
+            "POSTGRES_URL": bool(os.getenv("POSTGRES_URL")),
+            "POSTGRES_PRISMA_URL": bool(os.getenv("POSTGRES_PRISMA_URL")),
+            "GROQ_API_KEY": bool(os.getenv("GROQ_API_KEY")),
+        },
+    }
+
+
 @app.get("/fechas_disponibles")
 def fechas_disponibles(tipo: str = "perro_macho"):
     return {"fechas": get_fechas_disponibles_reales(tipo)}
@@ -1582,6 +1601,7 @@ def ask_bot(data: ChatRequest):
         return {"response": respuesta, "session_id": session_id}
 
     except Exception as e:
+        logger.exception("Error en /ask_bot. session_id=%s", data.session_id if data.session_id else "default")
         return {
             "response": f"Error: {str(e)}",
             "session_id": data.session_id if data.session_id else "default",
