@@ -7,58 +7,78 @@ Este proyecto forma parte del curso:
 
 ---
 
-# 🎯 Propósito del proyecto
+# 🎯 Objetivo del proyecto
 
-El objetivo es diseñar y desarrollar un asistente conversacional capaz de:
+Diseñar un asistente conversacional capaz de:
 
-- Guiar al usuario paso a paso en la solicitud de esterilización
+- Guiar al cliente paso a paso en el proceso de esterilización
 - Validar condiciones clínicas antes de la cirugía
-- Gestionar disponibilidad de agenda
+- Gestionar la disponibilidad quirúrgica en tiempo real
 - Registrar clientes, mascotas y citas
-- Mejorar la eficiencia operativa de la clínica
+- Reducir errores operativos y carga administrativa
 
 ---
 
-# 🧩 Problema que resuelve
+# 🧩 Problema de negocio
 
-En entornos reales, las clínicas veterinarias se enfrentan a:
+En clínicas veterinarias reales:
 
-- Saturación de llamadas telefónicas
-- Errores en la recogida de datos
-- Reservas duplicadas o incorrectas
-- Falta de validaciones clínicas previas
+- Saturación de llamadas
+- Errores en recogida de datos
+- Duplicidad de citas
+- Falta de validación clínica previa
 - Pérdida de tiempo en tareas repetitivas
 
-Este chatbot automatiza el proceso garantizando:
+---
 
-- Datos estructurados
-- Validación clínica previa
-- Control de agenda
-- Reducción de errores humanos
+# 💡 Solución propuesta
+
+Este chatbot implementa:
+
+- Flujo guiado paso a paso
+- Validaciones clínicas automáticas
+- Motor de agenda basado en reglas de negocio
+- Persistencia estructurada de datos
+- Interacción multidioma (ES/EN)
 
 ---
 
-# 👥 Público objetivo
+## 🔗 Enlaces del proyecto
 
-- Clínicas veterinarias
-- Personal administrativo
-- Clientes que desean realizar una esterilización
+- GitHub (código):  
+  https://github.com/vegettux/veterinaria-chatbot  
 
----
+- Aplicación desplegada (Vercel):  
+  https://veterinaria-chatbot.vercel.app  
 
-# ⚙️ Tecnologías utilizadas
+- Gestión del proyecto (Jira):  
+  https://veterinaria-chatbot.atlassian.net  
 
-- **Python** → lógica principal
-- **FastAPI** → API backend
-- **SQLite** → base de datos
-- **HTML + JavaScript** → interfaz web básica
-- **Uvicorn** → servidor
-- **Markdown** → documentación estructurada
-- **Cursor (IA)** → desarrollo asistido
+  > 💡 Se recomienda acceder primero a la aplicación desplegada para probar el flujo completo del chatbot.
 
 ---
 
-# 🏗️ Arquitectura del sistema
+# 🧠 Valor diferencial
+
+Este proyecto NO es un chatbot simple. Implementa:
+
+### ✔ Máquina de estados conversacional
+- Control total del flujo
+- Validación por fases
+- Prevención de errores de usuario
+
+### ✔ Motor de agenda quirúrgica
+- Basado en consumo de minutos
+- Reglas reales de clínica
+- Restricciones operativas complejas
+
+### ✔ Sistema multidioma dinámico
+- Detección automática de idioma
+- Cambio en caliente durante la conversación
+
+---
+
+## 🏗️ Arquitectura del sistema
 
 Usuario (Web)
 ↓
@@ -70,339 +90,327 @@ Lógica conversacional
 ↓
 agenda.py (persistencia y validaciones)
 ↓
-SQLite (agenda.db)
-
-El sistema se apoya en documentación estructurada en `/docs`:
-
-- Reglas de negocio
-- Preoperatorio
-- Postoperatorio
+Base de datos (SQLite / PostgreSQL)
 
 ---
 
-## 📋 Gestión del proyecto (Jira)
+## ⚙️ Tecnologías utilizadas
 
-El desarrollo del proyecto ha sido gestionado mediante Jira siguiendo un enfoque tipo Kanban.
-
-Se han definido 15 tickets que cubren todo el ciclo de desarrollo:
-
-- Configuración inicial
-- Diseño del flujo conversacional
-- Persistencia en base de datos
-- Validaciones clínicas
-- Gestión de citas
-- Pruebas funcionales
-- Despliegue
-- Limpieza final del repositorio
-
-📄 Documentación completa de tickets:
-👉 docs/tickets.md
+- **Python** → lógica principal
+- **FastAPI** → API backend
+- **SQLite / PostgreSQL** → base de datos
+- **Uvicorn** → servidor
+- **HTML + JavaScript** → interfaz web
+- **dotenv** → configuración entorno
 
 ---
 
-# 🔄 Flujo funcional del chatbot
+## 📡 API
 
-1. Identificación del cliente
-2. Registro o recuperación de datos
-3. Registro de mascota
-4. Validaciones clínicas
-5. Consulta de disponibilidad
-6. Selección de fecha
-7. Confirmación de cita
+## Endpoint principal
 
----
+### POST `/ask_bot`
 
-# 📋 Reglas de negocio implementadas
+Procesa la conversación del usuario:
 
-- Días operativos: lunes a jueves
-- Capacidad diaria: 240 minutos
-- Máximo 2 perros por día
-- Bloqueo si:
-  - No hay vacuna
-  - No hay microchip
-  - Perra en celo
-- Control de fechas pasadas
-- Citas no duplicadas
-
----
-
-# 📂 Documentación de dominio
-
-Ubicación: `/docs`
-
-Incluye:
-
-- `business-rules.md`
-- `pre-operative-considerations.md`
-- `post-operative-considerations.md`
-
-Permite:
-
-- Separar lógica de negocio del código
-- Facilitar mantenimiento
-- Preparar evolución a RAG
-
----
-
-# 🧠 Metodología SDD (Spec Driven Development)
-
-El proyecto sigue un enfoque basado en especificación:
-
-- Cada funcionalidad nace en Jira
-- Cada desarrollo está vinculado a un ticket
-- GitHub refleja la implementación
-- Jira refleja planificación y estado
-
-Reglas:
-
-- No se implementa sin ticket
-- No se cierra sin validación
-- Repo + Jira siempre sincronizados
-
----
-
-# 🔧 Flujo de trabajo
-
-1. Creación de ticket en Jira
-2. Definición de requisitos
-3. Implementación en código
-4. Pruebas manuales
-5. Actualización de Jira
-
----
-
-# 🧪 Enriquecimiento de tickets
-
-Se ha aplicado proceso de mejora de tickets:
-
-De:
-
-> "Crear chatbot"
-
-A:
-
-- Objetivo
-- Criterios de aceptación
-- Riesgos
-- Dependencias
-
-Este proceso mejora la calidad del desarrollo.
-
----
-
-# 🤖 API
-
-Endpoints principales:
-
-### GET /
-
-Estado del sistema
-
-### POST /ask_bot
-
-Procesa mensajes del usuario
-
-Ejemplo:
-
-{  
- "message": "quiero esterilizar a mi perro",  
- "session_id": "test-session"  
+ json
+{
+  "message": "quiero esterilizar a mi perro",
+  "session_id": "123"
 }
 
 ---
 
-# 💬 Interfaz de chat
 
-- Interfaz web simple
-- Conexión directa con backend
-- Uso en navegador💬 Interfaz de chat (VET-8)
+## 📡 Otros endpoints
 
----
+### GET /
+Interfaz web del chatbot
 
-# 🧠 Lógica del chatbot
+### GET /healthz
+Estado del sistema y entorno
 
-- Integración con modelo LLM
-- Prompt controlado
-- Flujo guiado paso a paso
-- Una pregunta por interacción
+### GET /fechas_disponibles
+Devuelve disponibilidad quirúrgica real
 
 ---
 
-# 🔁 Memoria de conversación
+## 🔄 Flujo conversacional
 
-El sistema utiliza `session_id` para mantener contexto:
+### 1. Inicio
+- Mensaje de bienvenida  
+- Identificación de cliente  
 
-- Cada sesión es independiente
-- Permite coherencia en la conversación
+### 2. Identificación
+- Cliente existente → búsqueda por DNI  
+- Cliente nuevo → registro  
 
-Limitación actual:
+### 3. Selección de acción
+- Consulta informativa  
+- Gestión de mascota  
 
-- Memoria en runtime (no persistente)
+### 4. Gestión de mascota
+- Selección o alta  
+- Consulta de cita  
+- Cambio de cita  
+- Información clínica  
 
----
+### 5. Validaciones
+- Edad  
+- Vacunas  
+- Microchip  
+- Estado clínico  
 
-# 📚 RAG (simulado)
-
-Actualmente:
-
-- Uso de documentos locales en `/docs`
-- Simulación de recuperación de información
-
-Mejora futura:
-
-- Integración con fuente oficial online
-- Recuperación dinámica de contenido
-
----
-
-# 📅 Disponibilidad
-
-- Sistema mock de fechas disponibles
-- Generación dinámica
+### 6. Reserva
+- Validación de disponibilidad  
+- Confirmación de cita  
 
 ---
 
-# ⚠️ Limitación actual
+## 🧠 Lógica conversacional
 
-Actualmente:
+El sistema funciona mediante:
 
-- No hay integración con calendario real
+- `session_id` → memoria de conversación  
+- `conversation_store` → estado en runtime  
 
-Mejora futura:
-
-- Google Calendar / Calendly
-- Automatización completa de agenda
+Control por fases:
+- identificación  
+- selección  
+- operación  
 
 ---
 
-# 🗄️ Modelo de datos
+## 🌐 Sistema multidioma
+
+El chatbot:
+
+- Detecta idioma automáticamente  
+- Mantiene idioma durante la conversación  
+- Permite cambio dinámico (ej: "español", "english")  
+
+---
+
+## 📋 Reglas de negocio
+
+### Capacidad operativa
+- Días: lunes a jueves  
+- Capacidad diaria: 240 minutos  
+- Sistema basado en tiempo quirúrgico  
+
+---
+
+### Tiempos de cirugía
+
+#### Gatos
+- Macho: 12 min  
+- Hembra: 15 min  
+
+#### Perros
+- Macho: 30 min  
+- Hembra:
+  - 0–10 kg: 45 min  
+  - 10–20 kg: 50 min  
+  - 20–30 kg: 60 min  
+  - 30–40 kg: 60 min  
+  - +40 kg: 70 min  
+
+---
+
+### Restricciones
+- Máximo 2 perros por día  
+- No duplicidad de citas  
+- Control de fechas válidas  
+
+---
+
+### Validaciones clínicas
+- Microchip obligatorio  
+- Vacuna antirrábica obligatoria  
+- Estado sanitario adecuado  
+
+---
+
+### Casos especiales
+- Perras en celo → ❌ NO operables  
+- Animales > 6 años → analítica obligatoria  
+
+---
+
+## 🗄️ Modelo de datos
 
 ### Clientes
-
-- id
-- nombre
-- dni
-- telefono
-- email
-- direccion
+- id  
+- nombre  
+- dni  
+- telefono  
+- email  
+- direccion  
 
 ### Mascotas
-
-- id
-- cliente_id
-- nombre
-- especie
-- sexo
-- edad
-- peso
-- microchip
-- vacuna
+- id  
+- cliente_id  
+- nombre  
+- especie  
+- sexo  
+- edad  
+- peso  
+- microchip  
+- vacuna  
 
 ### Citas
-
-- id
-- fecha
-- cliente_id
-- mascota_id
-- tipo_cirugia
-- minutos
-- estado
+- id  
+- fecha  
+- cliente_id  
+- mascota_id  
+- tipo_cirugia  
+- minutos  
+- estado  
 
 ---
 
-# 🚀 Instalación y ejecución
+## 🧪 Casos de uso cubiertos
 
-git clone [https://github.com/vegettux/veterinaria-chatbot](https://github.com/vegettux/veterinaria-chatbot)  
-cd veterinaria-chatbot  
+- Cliente nuevo  
+- Cliente existente  
+- Perro / gato  
+- Consulta clínica  
+- Reserva completa  
+- Cambio de cita  
+- Validación de reglas  
 
-python -m venv venv  
-venv\Scripts\activate  
+---
+
+## ⚠️ Limitaciones actuales
+
+- Memoria en runtime (no persistente)  
+- No integración con calendario real  
+- No notificaciones externas  
+
+---
+
+## 🚀 Mejoras futuras
+
+- Integración con Google Calendar  
+- Notificaciones (email / WhatsApp)  
+- Panel administrativo  
+- Persistencia de sesiones  
+- RAG real con documentación veterinaria  
+
+---
+
+## 🧠 Metodología
+
+Desarrollo basado en:
+
+- Enfoque iterativo  
+- Validación continua  
+- Modelado de flujo conversacional  
+- Implementación de reglas reales de negocio  
+
+---
+
+## 🔧 Instalación
+
+bash
+git clone https://github.com/vegettux/veterinaria-chatbot
+cd veterinaria-chatbot
+
+python -m venv venv
+venv\Scripts\activate
 
 pip install -r requirements.txt
 
-### Configurar `.env`:
+---
 
-GROQ_API_KEY=tu_clave_groq
-GROQ_MODEL=llama-3.3-70b-versatile
-DATABASE_URL=postgresql://usuario:password@host:5432/dbname
+## ⚙️ Configuración
 
-### Ejecutar:
+Crear archivo `.env`:
 
+env
+OPENAI_API_KEY=tu_clave
+DATABASE_URL=sqlite:///./agenda.db
+
+---
+
+## ▶️ Ejecución
+
+bash
 uvicorn main:app --reload
 
-python -m uvicorn main:app --reload
+---
 
-### Abrir en navegador:
+## 🌐 Acceso
 
-[http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+* Web: http://127.0.0.1:8000
+* Docs: http://127.0.0.1:8000/docs
 
 ---
 
-# 🌐 Despliegue
+## 🌐 Despliegue
 
-Aplicación desplegada en:
+La aplicación está desplegada en la nube utilizando Vercel:
 
-👉 [https://veterinaria-chatbot.vercel.app](https://veterinaria-chatbot.vercel.app)
-
-## Integración en Vercel con Postgres
-
-1. Crea una base de datos Postgres gestionada (por ejemplo Neon).
-2. En Vercel, configura la variable de entorno `DATABASE_URL`.
-3. Despliega el proyecto con `main.py` como entrada Python.
-4. Ejecuta la migración de datos una sola vez:
-
-```bash
-python scripts/migrate_sqlite_to_postgres.py
-```
-
-5. Verifica los endpoints:
-   - `GET /`
-   - `POST /ask_bot`
+👉 https://veterinaria-chatbot.vercel.app  
 
 ---
 
-# 🔗 Enlaces del proyecto
+## ⚙️ Infraestructura
 
-- GitHub:  
-[https://github.com/vegettux/veterinaria-chatbot](https://github.com/vegettux/veterinaria-chatbot)
-- Jira:  
-[https://veterinaria-chatbot.atlassian.net](https://veterinaria-chatbot.atlassian.net)
-
----
-
-# 🧪 Casos de uso probados
-
-- Cliente nuevo
-- Cliente registrado
-- Perro / Gato
-- Validaciones clínicas
-- Fechas válidas / inválidas
-- Reserva completa
+- **Frontend + Backend** desplegados en Vercel
+- **API FastAPI** ejecutándose como serverless
+- **Base de datos**:
+  - SQLite en local
+  - PostgreSQL en entorno cloud (producción)
 
 ---
 
-# 📈 Mejoras futuras
+## 🔗 Variables de entorno
 
-- Integración con calendario real
-- Notificaciones (email / WhatsApp)
-- Panel administrativo
-- Historial clínico
-- RAG real con documentación veterinaria
+Configuradas en Vercel:
 
----
-
-# 📌 Conclusión
-
-Este proyecto demuestra cómo un chatbot puede:
-
-- Automatizar procesos reales
-- Aplicar reglas de negocio complejas
-- Mejorar la experiencia del cliente
-- Reducir carga operativa
+- `DATABASE_URL`
+- `OPENAI_API_KEY` (si se usa LLM)
+- `POSTGRES_URL` (opcional)
 
 ---
 
-# 👨‍💻 Autor
+## 🚀 Flujo de despliegue
 
-**José Gil**  
+1. Push a GitHub  
+2. Vercel detecta cambios automáticamente  
+3. Build y despliegue automático  
+4. API disponible en producción  
+
+---
+
+## 🧪 Verificación en producción
+
+Endpoints disponibles:
+
+- GET `/` → interfaz del chatbot  
+- POST `/ask_bot` → interacción con el chatbot  
+- GET `/healthz` → estado del sistema  
+
+---
+
+## ⚠️ Consideraciones
+
+- En producción se usa PostgreSQL (no SQLite)  
+- El sistema sigue funcionando con las mismas reglas de negocio  
+- La memoria de conversación sigue siendo en runtime (no persistente)  
+
+---
+
+## 🧠 Nota técnica
+
+El sistema está diseñado para ser independiente del motor de base de datos, 
+permitiendo funcionar tanto en SQLite (desarrollo local) como en PostgreSQL (producción en Vercel) 
+sin cambios en la lógica de negocio.
+
+---
+
+## 👨‍💻 Autor
+
+José Gil
 Máster Big Data & IA — ENAE
