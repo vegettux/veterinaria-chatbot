@@ -327,10 +327,9 @@ pip install -r requirements.txt
 
 Crear archivo `.env`:
 
-env
-GROQ_API_KEY=your_groq_api_key_here
-GROQ_MODEL=llama-3.3-70b-versatile
-DATABASE_URL=postgresql://usuario:password@host:5432/dbname
+* GROQ_API_KEY=your_groq_api_key_here
+* GROQ_MODEL=llama-3.3-70b-versatile
+* DATABASE_URL=postgresql://usuario:password@host:5432/dbname
 
 ---
 
@@ -371,7 +370,7 @@ La aplicación está desplegada en la nube utilizando Vercel:
 Configuradas en Vercel:
 
 - `DATABASE_URL`
-- `OPENAI_API_KEY` (si se usa LLM)
+- `GROQ_API_KEY`(si se usa LLM)
 - `POSTGRES_URL` (opcional)
 
 ---
