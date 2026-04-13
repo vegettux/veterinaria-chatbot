@@ -322,7 +322,9 @@ pip install -r requirements.txt
 
 ### Configurar `.env`:
 
-OPENAI_API_KEY=tu_clave
+GROQ_API_KEY=tu_clave_groq
+GROQ_MODEL=llama-3.3-70b-versatile
+DATABASE_URL=postgresql://usuario:password@host:5432/dbname
 
 ### Ejecutar:
 
@@ -341,6 +343,21 @@ python -m uvicorn main:app --reload
 Aplicación desplegada en:
 
 👉 [https://veterinaria-chatbot.vercel.app](https://veterinaria-chatbot.vercel.app)
+
+## Integración en Vercel con Postgres
+
+1. Crea una base de datos Postgres gestionada (por ejemplo Neon).
+2. En Vercel, configura la variable de entorno `DATABASE_URL`.
+3. Despliega el proyecto con `main.py` como entrada Python.
+4. Ejecuta la migración de datos una sola vez:
+
+```bash
+python scripts/migrate_sqlite_to_postgres.py
+```
+
+5. Verifica los endpoints:
+   - `GET /`
+   - `POST /ask_bot`
 
 ---
 

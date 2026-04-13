@@ -1,7 +1,6 @@
 from datetime import datetime, timedelta
 import os
 import re
-import sqlite3
 from typing import Optional
 
 from fastapi import FastAPI
@@ -11,6 +10,7 @@ from pydantic import BaseModel
 from agenda import (
     buscar_cliente_por_dni,
     buscar_mascota_cliente_por_nombre,
+    cancelar_cita_confirmada_por_mascota,
     existe_cita_mascota,
     get_fechas_disponibles_reales,
     listar_mascotas_cliente,
@@ -345,22 +345,6 @@ def clasificar_categoria_mascota(pet: dict) -> dict:
 
 def obtener_tipo_cirugia_desde_pet(pet: dict) -> str:
     return clasificar_categoria_mascota(pet)["categoria"]
-
-
-def cancelar_cita_confirmada_por_mascota(mascota_id: int) -> bool:
-    try:
-        conn = sqlite3.connect("agenda.db")
-        c = conn.cursor()
-        c.execute("""
-            UPDATE citas
-            SET estado = 'cancelada'
-            WHERE mascota_id = ? AND estado = 'confirmada'
-        """, (mascota_id,))
-        conn.commit()
-        conn.close()
-        return True
-    except Exception:
-        return False
 
 
 def construir_texto_fechas(tipo_cirugia: str, state: dict):
