@@ -1,8 +1,12 @@
 import os
 from datetime import datetime, timedelta
 from typing import Optional
-from psycopg.rows import dict_row
-import psycopg
+try:
+    import psycopg
+    from psycopg.rows import dict_row
+except ImportError:
+    psycopg = None
+    dict_row = None
 
 DATABASE_URL = (
     os.getenv("DATABASE_URL")
@@ -31,6 +35,8 @@ DIAS_OPERATIVOS = [0, 1, 2, 3]  # lunes a jueves
 # =========================
 
 def get_connection():
+    if psycopg is None or dict_row is None:
+        raise RuntimeError("Dependencia psycopg no disponible en runtime.")
     if not DATABASE_URL:
         raise RuntimeError("DATABASE_URL no está configurada.")
     return psycopg.connect(DATABASE_URL, row_factory=dict_row)
@@ -143,8 +149,10 @@ def registrar_cliente(nombre: str, dni: str, telefono: str, email: str, direccio
         if cliente_id is None:
             return True, ""
         return True, str(cliente_id)
-    except psycopg.IntegrityError:
-        return False, "Ya existe un cliente con ese DNI."
+    except Exception as e:
+        if "duplicate key value" in str(e).lower():
+            return False, "Ya existe un cliente con ese DNI."
+        raise
 
 
 # =========================
@@ -417,7 +425,7 @@ def reservar_cita(fecha_str: str, cliente_id: int, mascota_id: int, tipo_cirugia
         conn.commit()
         return True, "Cita reservada correctamente."
 
-    except psycopg.Error as e:
+    except Exception as e:
         conn.rollback()
         return False, f"Error de base de datos: {str(e)}"
     finally:
