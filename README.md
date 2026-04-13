@@ -328,8 +328,9 @@ pip install -r requirements.txt
 Crear archivo `.env`:
 
 env
-OPENAI_API_KEY=tu_clave
-DATABASE_URL=sqlite:///./agenda.db
+GROQ_API_KEY=your_groq_api_key_here
+GROQ_MODEL=llama-3.3-70b-versatile
+DATABASE_URL=postgresql://usuario:password@host:5432/dbname
 
 ---
 
